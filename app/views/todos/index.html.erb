@@ -1,0 +1,43 @@
+
+
+<div class="flex flex-col">
+    <% if notice.present? %>
+        <div>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                <span class="font-medium">Info alert!</span> <%= notice %>
+            </div>
+        </div>
+    <% elsif alert.present? %>
+        <div>
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <span class="font-medium">Danger alert!</span> <%= alert %>
+            </div>
+        </div>
+    <% end %>
+    <div>
+        <h1 class="text-xl font-bold">Todo List</h1>
+    </div>
+    <div class="mt-3">
+        <%= render 'form', task: @task %>
+    </div>
+
+    <div id="todo-list" class="mt-5 mb-3" data-controller="todos">
+        <h3 class="font-semibold text-lg">All Todos:</h3>
+        <% @todos.each do |todo| %>
+            <%= form_with(model: todo) do |f| %>
+                <div class="flex items-center">
+                    <%= f.check_box :completed, class: 'basic-checkbox', data: { id: todo.id, action: "todos#toggle" } %>
+                    <p class="basic-checkbox-label"><%= todo.description %></p>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    <hr>
+    <div class="mt-5">
+        <h3 class="font-semibold text-lg">Completed Todos:</h3>
+        <% @completed_todo.each do |todo| %>
+            <p class="basic-checkbox-label"><%= todo.description %></p>
+        <% end %>
+    </div>
+</div>
+
